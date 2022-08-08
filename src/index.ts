@@ -39,6 +39,21 @@ interface APOD {
 	url: string;
 }
 
+const months = [
+	"January",
+	"February",
+	"March",
+	"April",
+	"May",
+	"June",
+	"July",
+	"August",
+	"September",
+	"October",
+	"November",
+	"December"
+];
+
 export default {
 	async scheduled(
 		controller: ScheduledController,
@@ -60,9 +75,17 @@ export default {
 			const urlDate = data.date.replaceAll("-", "").slice(2);
 			const url = `https://apod.nasa.gov/apod/ap${urlDate}.html`;
 
+			const [year, month, day] = data.date.split("-");
+			const date = new Date();
+			date.setFullYear(parseInt(year), parseInt(month) - 1, parseInt(day));
+			const dateString = date.toLocaleDateString("en-US", { dateStyle: "long" });
+
 			const embed = {
 				title: "Astronomy Picture of the Day",
 				description: data.explanation,
+				footer: {
+					text: dateString
+				},
 				url,
 				color: 407429, // Blue color from the NASA logo
 				[data.media_type]: {
