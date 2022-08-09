@@ -80,20 +80,30 @@ export default {
 			date.setFullYear(parseInt(year), parseInt(month) - 1, parseInt(day));
 			const dateString = date.toLocaleDateString("en-US", { dateStyle: "long" });
 
-			const message = {
-				embeds: [{
-					title: "Astronomy Picture of the Day",
-					description: data.explanation,
-					footer: {
-						text: dateString
-					},
-					url,
-					color: 407429, // Blue color from the NASA logo
-					[data.media_type]: {
-						url: data.hdurl
-					}
-				}]
-			} as RESTPostAPIChannelMessageJSONBody;
+			let message: RESTPostAPIChannelMessageJSONBody | null;
+			if (data.media_type == "image") {
+				message = {
+					embeds: [{
+						title: "Astronomy Picture of the Day",
+						description: data.explanation,
+						footer: {
+							text: dateString
+						},
+						url,
+						color: 407429, // Blue color from the NASA logo
+						image: {
+							url: data.hdurl
+						}
+					}]
+				};
+			} else {
+				// Video
+				const videoId = new URL(data.url).pathname.split("/").pop(); // Get the last element
+				const videoUrl = `https://youtube.com/watch?v=${videoId}`;
+				message = {
+					content: `**${dateString}:** ${data.explanation} (<${url}>)\n\n${videoUrl}`
+				};
+			}
 
 			const request = new Request(env.WEBHOOK_URL, {
 				method: "POST",
