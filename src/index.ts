@@ -84,7 +84,7 @@ export default {
 			if (data.media_type == "image") {
 				message = {
 					embeds: [{
-						title: "Astronomy Picture of the Day",
+						title: data.title,
 						description: data.explanation,
 						footer: {
 							text: dateString
@@ -101,7 +101,7 @@ export default {
 				const videoId = new URL(data.url).pathname.split("/").pop(); // Get the last element
 				const videoUrl = `https://youtube.com/watch?v=${videoId}`;
 				message = {
-					content: `**${dateString}:** ${data.explanation} (<${url}>)\n\n${videoUrl}`
+					content: `**${data.title} (${dateString}):** ${data.explanation} (<${url}>)\n\n${videoUrl}`
 				};
 			}
 
