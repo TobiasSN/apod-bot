@@ -1,4 +1,4 @@
-import { APIEmbed, APIMessage } from "discord-api-types/v10";
+import { APIEmbed, APIMessage, RESTPostAPIChannelMessageJSONBody } from "discord-api-types/v10";
 
 /// <reference path="types.d.ts" />
 
@@ -80,27 +80,27 @@ export default {
 			date.setFullYear(parseInt(year), parseInt(month) - 1, parseInt(day));
 			const dateString = date.toLocaleDateString("en-US", { dateStyle: "long" });
 
-			const embed = {
-				title: "Astronomy Picture of the Day",
-				description: data.explanation,
-				footer: {
-					text: dateString
-				},
-				url,
-				color: 407429, // Blue color from the NASA logo
-				[data.media_type]: {
-					url: data.hdurl
-				}
-			} as APIEmbed;
+			const message = {
+				embeds: [{
+					title: "Astronomy Picture of the Day",
+					description: data.explanation,
+					footer: {
+						text: dateString
+					},
+					url,
+					color: 407429, // Blue color from the NASA logo
+					[data.media_type]: {
+						url: data.hdurl
+					}
+				}]
+			} as RESTPostAPIChannelMessageJSONBody;
 
 			const request = new Request(env.WEBHOOK_URL, {
 				method: "POST",
 				headers: {
 					"Content-Type": "application/json"
 				},
-				body: JSON.stringify({
-					embeds: [embed]
-				} as APIMessage)
+				body: JSON.stringify(message)
 			});
 			request.headers.delete("cf-workers-preview-token"); // Workaround due to Wrangler bug.
 			const _ = await fetch(request);
