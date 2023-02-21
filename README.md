@@ -1,23 +1,14 @@
 # Astronomy Picture of the Day Bot
 
-This is a bot based on Cloudflare Workers that sends NASA's Astronomy Picture of
-the Day to a Discord webhook when it comes out.
+This is a program that sends NASA's Astronomy Picture of the Day to a Discord
+webhook when it comes out. It is intended to be executed once a day after that
+day's picture comes out. This usually happens around 5:05 AM UTC.
 
 ## Development
 
-Firstly, make sure you have Yarn and Wrangler installed:
-```sh
-npm install -g yarn
-yarn global add wrangler # Or `npm install -g wrangler`
-```
+Firstly, make sure you have Rust set up. [Rustup](https://rustup.rs) is
+recommended for this.
 
-Copy the contents of `wrangler.example.toml` to a new file called
-`wrangler.toml`. Then, create a preview Workers KV store, and a regular one if
-you want to deploy, and place them in your `wrangler.toml` under
-`kv_namespaces`.
+Then, copy the `.example.env` file to `.env` and fill out the variables.
 
-Finally, copy `.dev.example.vars` to `.dev.vars`, acquire a NASA API key from
-https://api.nasa.gov, as well as a Discord webhook URL, and place both in the
-new file.
-
-Now you can run a local version of the bot with `wrangler dev`.
+Now, run `cargo run` to trigger the bot.
