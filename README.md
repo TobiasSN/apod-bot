@@ -11,4 +11,5 @@ recommended for this.
 
 Then, copy the `.example.env` file to `.env` and fill out the variables.
 
-Now, run `cargo run` to trigger the bot.
+Now, run `cargo run` to trigger the bot. Optionally, add a date after in
+YY-MM-DD format, like `cargo run 23-02-22`, to make the bot use that date.
