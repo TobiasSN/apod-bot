@@ -7,5 +7,4 @@ edition = "2021"
 chrono = "0.4.23"
 dotenvy = "0.15.6"
 reqwest = { version = "0.11.14", features = ["blocking", "json"] }
-serde = "1.0.152"
-twilight-http = "0.15.0"
+serde = { version = "1.0.152", features = ["derive"] }
