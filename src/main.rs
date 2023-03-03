@@ -4,7 +4,7 @@ use serde::{Deserialize, Serialize};
 
 #[derive(Debug, Deserialize)]
 struct Apod {
-	copyright: String,
+	copyright: Option<String>,
 	date: String,
 	explanation: String,
 	hdurl: Option<String>, // TODO: Enforce this only being here when it's an image?
