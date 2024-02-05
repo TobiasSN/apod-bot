@@ -120,9 +120,7 @@ fn create_message(data: Apod) -> Message {
 				footer: EmbedFooter { text: date_string },
 				url,
 				color: 0x063785,
-				image: EmbedImage {
-					url: data.hdurl.unwrap(),
-				},
+				image: EmbedImage { url: data.url },
 			}],
 		}),
 		MediaType::Video => {
